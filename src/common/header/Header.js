@@ -89,9 +89,9 @@ const Header = (props) => {
 
         let dataLogin = null;
         let xhrLogin = new XMLHttpRequest();
-        xhrLogin.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
-                sessionStorage.setItem("uuid", JSON.parse(this.responseText).id);
+        xhrLogin.addEventListener("readystatechange", () => {
+            if (xhrLogin.readyState === 4) {
+                sessionStorage.setItem("uuid", JSON.parse(xhrLogin.responseText).id);
                 sessionStorage.setItem("access-token", xhrLogin.getResponseHeader("access-token"));
                 setLoggedIn(true);
                 closeModalHandler();
@@ -129,8 +129,8 @@ const Header = (props) => {
         });
 
         let xhrSignup = new XMLHttpRequest();
-        xhrSignup.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
+        xhrSignup.addEventListener("readystatechange", () => {
+            if (xhrSignup.readyState === 4) {
                 setRegistrationSuccess(true);
             }
         });
