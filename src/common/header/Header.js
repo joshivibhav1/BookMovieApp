@@ -77,6 +77,7 @@ const Header = (props) => {
 
     const closeModalHandler = () => {
         setModalIsOpen(false);
+        setRegistrationSuccess(false);
     }
 
     const tabChangeHandler = (event, value) => {
@@ -89,20 +90,22 @@ const Header = (props) => {
 
         let dataLogin = null;
         let xhrLogin = new XMLHttpRequest();
-        xhrLogin.addEventListener("readystatechange", () => {
-            if (xhrLogin.readyState === 4) {
-                sessionStorage.setItem("uuid", JSON.parse(xhrLogin.responseText).id);
-                sessionStorage.setItem("access-token", xhrLogin.getResponseHeader("access-token"));
-                setLoggedIn(true);
-                closeModalHandler();
-            }
-        });
+        if(!(username === "" || loginPassword === "")) {
+            xhrLogin.addEventListener("readystatechange", () => {
+                if (xhrLogin.readyState === 4) {
+                    sessionStorage.setItem("uuid", JSON.parse(xhrLogin.responseText).id);
+                    sessionStorage.setItem("access-token", xhrLogin.getResponseHeader("access-token"));
+                    setLoggedIn(true);
+                    closeModalHandler();
+                }
+            });
 
-        xhrLogin.open("POST", props.baseUrl + "auth/login");
-        xhrLogin.setRequestHeader("Authorization", "Basic " + window.btoa(username + ":" + loginPassword));
-        xhrLogin.setRequestHeader("Content-Type", "application/json");
-        xhrLogin.setRequestHeader("Cache-Control", "no-cache");
-        xhrLogin.send(dataLogin);
+            xhrLogin.open("POST", props.baseUrl + "auth/login");
+            xhrLogin.setRequestHeader("Authorization", "Basic " + window.btoa(username + ":" + loginPassword));
+            xhrLogin.setRequestHeader("Content-Type", "application/json");
+            xhrLogin.setRequestHeader("Cache-Control", "no-cache");
+            xhrLogin.send(dataLogin);
+        }
     }
 
     const inputUsernameChangeHandler = (e) => {
@@ -120,25 +123,27 @@ const Header = (props) => {
         registerPassword === "" ? setRegisterPasswordRequired("dispBlock") : setRegisterPasswordRequired("dispNone");
         contact === "" ? setContactRequired("dispBlock") : setContactRequired("dispNone");
 
-        let dataSignup = JSON.stringify({
-            "email_address": email,
-            "first_name": firstname,
-            "last_name": lastname,
-            "mobile_number": contact,
-            "password": registerPassword
-        });
+        if(!(firstname === "" || lastname === "" || email === "" || registerPassword === "" || contact === "")) {
+            let dataSignup = JSON.stringify({
+                "email_address": email,
+                "first_name": firstname,
+                "last_name": lastname,
+                "mobile_number": contact,
+                "password": registerPassword
+            });
 
-        let xhrSignup = new XMLHttpRequest();
-        xhrSignup.addEventListener("readystatechange", () => {
-            if (xhrSignup.readyState === 4) {
-                setRegistrationSuccess(true);
-            }
-        });
+            let xhrSignup = new XMLHttpRequest();
+            xhrSignup.addEventListener("readystatechange", () => {
+                if (xhrSignup.readyState === 4) {
+                    setRegistrationSuccess(true);
+                }
+            });
 
-        xhrSignup.open("POST", props.baseUrl + "signup");
-        xhrSignup.setRequestHeader("Content-Type", "application/json");
-        xhrSignup.setRequestHeader("Cache-Control", "no-cache");
-        xhrSignup.send(dataSignup);
+            xhrSignup.open("POST", props.baseUrl + "signup");
+            xhrSignup.setRequestHeader("Content-Type", "application/json");
+            xhrSignup.setRequestHeader("Cache-Control", "no-cache");
+            xhrSignup.send(dataSignup);
+        }
     }
 
     const inputFirstNameChangeHandler = (e) => {
