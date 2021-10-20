@@ -38,7 +38,7 @@
     width: 24%;
 }
 
-.released-movie-grid-item {
+.released-movie-image-item {
     margin: 15px;
 }
 
@@ -52,7 +52,7 @@
     .right {
         width: 90%;
     }
-    .released-movie-grid-item {
+    .released-movie-image-item {
         margin: 8px;
     }
 }

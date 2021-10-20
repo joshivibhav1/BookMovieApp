@@ -3,9 +3,9 @@ import './Home.css';
 import Header from '../../common/header/Header';
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
+import ImageList from '@material-ui/core/ImageList';
+import ImageListItem from '@material-ui/core/ImageListItem';
+import ImageListItemBar from '@material-ui/core/ImageListItemBar';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import FormControl from '@material-ui/core/FormControl';
@@ -30,17 +30,17 @@ const styles = (theme) => ({
         padding: '8px',
         fontSize: '1rem'
     },
-    gridListUpcomingMovies: {
+    imageListUpcomingMovies: {
         flexWrap: 'nowrap',
         transform: 'translateZ(0)',
         width: '100%'
     },
-    gridListMain: {
+    imageListMain: {
         transform: 'translateZ(0)',
         cursor: 'pointer'
     },
     formController: {
-        margin: theme.spacing.unit,
+        margin: theme.spacing(1),
         minWidth: 240,
         maxWidth: 240
     },
@@ -178,28 +178,28 @@ const Home = (props) => {
                 <span>Upcoming Movies</span>
             </div>
 
-            <GridList cols={6} className={classes.gridListUpcomingMovies} cellHeight={250} >
+            <ImageList cols={6} className={classes.imageListUpcomingMovies} rowHeight={250} >
                 {upcomingMovies.map(movie => (
-                    <GridListTile key={"upcoming" + movie.id}>
+                    <ImageListItem key={"upcoming" + movie.id}>
                         <img src={movie.poster_url} className="movie-poster" alt={movie.title} />
-                        <GridListTileBar title={movie.title} />
-                    </GridListTile>
+                        <ImageListItemBar title={movie.title} />
+                    </ImageListItem>
                 ))}
-            </GridList>
+            </ImageList>
 
             <div className="flex-container">
                 <div className="left">
-                    <GridList cellHeight={350} cols={4} className={classes.gridListMain}>
+                    <ImageList rowHeight={350} cols={4} className={classes.imageListMain}>
                         {releasedMovies.map(movie => (
-                            <GridListTile onClick={() => movieClickHandler(movie.id)} className="released-movie-grid-item" key={"grid" + movie.id}>
+                            <ImageListItem onClick={() => movieClickHandler(movie.id)} className="released-movie-image-item" key={"image" + movie.id}>
                                 <img src={movie.poster_url} className="movie-poster" alt={movie.title} />
-                                <GridListTileBar
+                                <ImageListItemBar
                                     title={movie.title}
                                     subtitle={<span>Release Date: {new Date(movie.release_date).toDateString()}</span>}
                                 />
-                            </GridListTile>
+                            </ImageListItem>
                         ))}
-                    </GridList>
+                    </ImageList>
                 </div>
                 <div className="right">
                     <Card>
@@ -282,7 +282,7 @@ const Home = (props) => {
                     </Card>
                 </div>
             </div>
-        </div >
+        </div>
     );
 };
 
